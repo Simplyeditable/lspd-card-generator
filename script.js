@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const subDivisionMappings = {
         'MISSION ROW DIVISION':  ['Patrol Officer', 'FAD'],
-        'Metropolitan Division': ['Diving Unit', 'H Platoon', 'K-9 Platoon', 'Bomb Squad', 'Crisis Negotiation', 'S.W.A.T'],
+        'Metropolitan Division': ['Diving Unit', 'H Platoon', 'K-9 Platoon', 'Bomb Squad', 'Crisis Negotiation', 'D Platoon'],
         'Gang Enforcement Detail': ['Gang  Officer'],
         'Detective Bureau': ['Gang Impact Team', 'MRAD', 'Major Crimes'],
         'Traffic Division': ['SES']
