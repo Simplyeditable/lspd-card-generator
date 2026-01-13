@@ -22,11 +22,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const subDivisionMappings = {
-        'MISSION ROW DIVISION':  ['Patrol Officer', 'FAD'],
-        'Metropolitan Division': ['Diving Unit', 'H Platoon', 'K-9 Platoon', 'Bomb Squad', 'Crisis Negotiation', 'D Platoon'],
-        'Gang Enforcement Detail': ['Gang  Officer'],
+        'Mission Row Division':  ['Police Officer',  'Fugitive Apprehension Detail', 'Sergeant'],
+        'Metropolitan Division': ['Diving Unit', 'H Platoon', 'K-9 Platoon', 'Bomb Squad', 'Crisis Negotiation', 'D Platoon', 'Sergeant'],
+        'Gang Enforcement Detail': ['Gang  Officer', 'Senior Gang Officer', 'Sergeant'],
         'Detective Bureau': ['Gang Impact Team', 'MRAD', 'Major Crimes'],
-        'Traffic Division': ['SES']
+        'Traffic Division': ['Traffic Officer', 'SES', 'Sergeant']
     };
 
     function initializeGenerator() {
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         function toggleWorkAreaVisibility() {
             const selectedDivision = divisionSelect.value;
-            if (selectedDivision === 'MISSION ROW DIVISION') {
+            if (selectedDivision === 'Mission Row Division' || selectedDivision === 'Gang Enforcement Detail') {
                 areaFormGroup.classList.remove('hidden');
                 areaSettingGroup.classList.remove('hidden');
             } else {
