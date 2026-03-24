@@ -8,14 +8,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const templateConfig = {
-        imageSrc: './images/mrpd.png',
+        imageSrc: './images/lspd_template.png',
         fileName: 'business-card.png',
         fields: ['phone', 'area', 'division', 'name', 'badge'],
         requiredFields: ['phone', 'name', 'badge'],
         settings: {
             phone: { size: 20, x: 407, y: 30, font: 'Crustaceans Signature', align: 'left' },
             division: { size: 15, x: 250, y: 160, font: 'Copperplate', align: 'center' },
-            area: { size: 14, x: 250, y: 185, font: 'Copperplate', align: 'center' },
+            // Moved Area down slightly so the Info/Sub-division fits between Division and Area
+            area: { size: 14, x: 250, y: 210, font: 'Copperplate', align: 'center' }, 
             name: { size: 19, x: 53, y: 249, align: 'left' },
             badge: { size: 19, x: 180, y: 249, align: 'left' }
         }
@@ -73,56 +74,44 @@ document.addEventListener('DOMContentLoaded', () => {
             changelogToggle.addEventListener('click', () => changelogContainer.classList.toggle('open'));
         }
 
-        function setupInitialState() {
-            templateImage.src = templateConfig.imageSrc;
-            
-            for (const field in templateConfig.settings) {
-                if (sliders[field]) {
-                    ['size', 'x', 'y'].forEach(prop => {
-                        if (sliders[field][prop] && templateConfig.settings[field][prop] !== undefined) {
-                            sliders[field][prop].value = templateConfig.settings[field][prop];
-                            valueDisplays[field][prop].textContent = templateConfig.settings[field][prop];
-                        }
-                    });
-                }
-            }
-            validateForm();
-        }
-
         function drawCard() {
-            if (!templateImage.complete) return;
-    
+            // Failsafe so it doesn't try drawing a blank canvas
+            if (!templateImage.complete || templateImage.naturalWidth === 0) return;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(templateImage, 0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#283F5B';
-            ctx.globalAlpha = 0.9;
+            ctx.globalAlpha = 0.9; 
 
-            // 1. PHONE (LSPD Header/Top Info)
+            // 1. LSPD (Phone Input)
             ctx.font = `${sliders.phone.size.value}px '${templateConfig.settings.phone.font}'`;
             ctx.textAlign = templateConfig.settings.phone.align;
             ctx.fillText(phoneInput.value || '', sliders.phone.x.value, sliders.phone.y.value);
+
             // 2. DIVISION
-            const divisionText = divisionSelect.value.toUpperCase();
             ctx.font = `${sliders.division.size.value}px '${templateConfig.settings.division.font}'`;
             ctx.textAlign = templateConfig.settings.division.align;
-            ctx.fillText(divisionText || '', sliders.division.x.value, sliders.division.y.value);
+            ctx.fillText(divisionSelect.value.toUpperCase() || '', sliders.division.x.value, sliders.division.y.value);
 
-                // 3. SUB-DIVISION / INFO (Placed below Division)
+            // 3. INFO (Sub-Division)
             const subDivisionText = subdivisionSelect.value.toUpperCase();
             if (subDivisionText) {
-                // We use the division X, but move the Y down (e.g., +20px) 
-                // You can also link this to a specific slider if you create one for 'subdivision'
-                const infoY = parseInt(sliders.division.y.value) + 20; 
+                // Places the sub-division 25px below the Division text
+                const infoY = parseInt(sliders.division.y.value) + 25; 
                 ctx.fillText(subDivisionText, sliders.division.x.value, infoY);
-            // 4. AREA (Placed at the bottom of the stack)
+            }
+
+            // 4. AREA
             ctx.font = `${sliders.area.size.value}px '${templateConfig.settings.area.font}'`;
             ctx.textAlign = templateConfig.settings.area.align;
             ctx.fillText(areaSelect.value.toUpperCase() || '', sliders.area.x.value, sliders.area.y.value);
 
-            // NAME & BADGE (Kept as per your original positions)
+            // NAME
             ctx.font = `${sliders.name.size.value}px '${fontSelect.value}'`;
             ctx.textAlign = templateConfig.settings.name.align;
             ctx.fillText(nameInput.value || '', sliders.name.x.value, sliders.name.y.value);
-    
+            
+            // BADGE
             let badgeText = badgeInput.value;
             if (badgeText && !badgeText.startsWith('#')) {
                 badgeText = '#' + badgeText;
@@ -130,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.font = `${sliders.badge.size.value}px '${badgeFontSelect.value}'`;
             ctx.textAlign = templateConfig.settings.badge.align;
             ctx.fillText(badgeText || '', sliders.badge.x.value, sliders.badge.y.value);
-    
+            
             ctx.globalAlpha = 1.0;
         }
 
@@ -171,9 +160,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         
+        // Ensure image loads and triggers drawing
         templateImage.onload = () => { 
             drawCard(); 
             validateForm(); 
+        };
+
+        templateImage.onerror = () => {
+            console.error("Image failed to load! Check if path is correct:", templateConfig.imageSrc);
         };
         
         for (const group in sliders) {
@@ -210,6 +204,23 @@ document.addEventListener('DOMContentLoaded', () => {
             link.click();
             resultContainer.textContent = 'Card downloaded!';
         });
+
+        // Initialize settings and THEN set the image source to trigger load
+        function setupInitialState() {
+            for (const field in templateConfig.settings) {
+                if (sliders[field]) {
+                    ['size', 'x', 'y'].forEach(prop => {
+                        if (sliders[field][prop] && templateConfig.settings[field][prop] !== undefined) {
+                            sliders[field][prop].value = templateConfig.settings[field][prop];
+                            valueDisplays[field][prop].textContent = templateConfig.settings[field][prop];
+                        }
+                    });
+                }
+            }
+            validateForm();
+            // Setting src triggers templateImage.onload
+            templateImage.src = templateConfig.imageSrc; 
+        }
 
         setupInitialState();
     }
