@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const templateConfig = {
-        imageSrc: './images/lspd_template.png',
+        imageSrc: './images/mrpd.png',
         fileName: 'business-card.png',
         fields: ['phone', 'area', 'division', 'name', 'badge'],
         requiredFields: ['phone', 'name', 'badge'],
