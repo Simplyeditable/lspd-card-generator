@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Metropolitan Division': ['Diving Unit', 'H Platoon', 'K-9 Platoon', 'Bomb Squad', 'Crisis Negotiation', 'D Platoon', 'Sergeant'],
         'Gang Enforcement Detail': ['Gang  Officer', 'Senior Gang Officer', 'Sergeant'],
         'Detective Bureau': ['Gang Impact Team', 'MRAD', 'Major Crimes'],
-        'Traffic Division': ['Traffic Officer', 'SES', 'Sergeant']
+        'Traffic Division': ['Traffic Officer', 'Specialized enforcement section', 'Sergeant']
     };
 
     function initializeGenerator() {
@@ -91,32 +91,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function drawCard() {
             if (!templateImage.complete) return;
-            
+    
             ctx.drawImage(templateImage, 0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#283F5B';
-            ctx.globalAlpha = 0.9; 
+            ctx.globalAlpha = 0.9;
 
+            // 1. PHONE (LSPD Header/Top Info)
             ctx.font = `${sliders.phone.size.value}px '${templateConfig.settings.phone.font}'`;
             ctx.textAlign = templateConfig.settings.phone.align;
             ctx.fillText(phoneInput.value || '', sliders.phone.x.value, sliders.phone.y.value);
-
-            ctx.font = `${sliders.area.size.value}px '${templateConfig.settings.area.font}'`;
-            ctx.textAlign = templateConfig.settings.area.align;
-            ctx.fillText(areaSelect.value.toUpperCase() || '', sliders.area.x.value, sliders.area.y.value);
-
-            let divisionText = divisionSelect.value.toUpperCase();
-            const subDivisionText = subdivisionSelect.value.toUpperCase();
-            if (divisionText && subDivisionText) {
-                divisionText = `${divisionText} / ${subDivisionText}`;
-            }
+            // 2. DIVISION
+            const divisionText = divisionSelect.value.toUpperCase();
             ctx.font = `${sliders.division.size.value}px '${templateConfig.settings.division.font}'`;
             ctx.textAlign = templateConfig.settings.division.align;
             ctx.fillText(divisionText || '', sliders.division.x.value, sliders.division.y.value);
 
+                // 3. SUB-DIVISION / INFO (Placed below Division)
+            const subDivisionText = subdivisionSelect.value.toUpperCase();
+            if (subDivisionText) {
+                // We use the division X, but move the Y down (e.g., +20px) 
+                // You can also link this to a specific slider if you create one for 'subdivision'
+                const infoY = parseInt(sliders.division.y.value) + 20; 
+                ctx.fillText(subDivisionText, sliders.division.x.value, infoY);
+            // 4. AREA (Placed at the bottom of the stack)
+            ctx.font = `${sliders.area.size.value}px '${templateConfig.settings.area.font}'`;
+            ctx.textAlign = templateConfig.settings.area.align;
+            ctx.fillText(areaSelect.value.toUpperCase() || '', sliders.area.x.value, sliders.area.y.value);
+
+            // NAME & BADGE (Kept as per your original positions)
             ctx.font = `${sliders.name.size.value}px '${fontSelect.value}'`;
             ctx.textAlign = templateConfig.settings.name.align;
             ctx.fillText(nameInput.value || '', sliders.name.x.value, sliders.name.y.value);
-            
+    
             let badgeText = badgeInput.value;
             if (badgeText && !badgeText.startsWith('#')) {
                 badgeText = '#' + badgeText;
@@ -124,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.font = `${sliders.badge.size.value}px '${badgeFontSelect.value}'`;
             ctx.textAlign = templateConfig.settings.badge.align;
             ctx.fillText(badgeText || '', sliders.badge.x.value, sliders.badge.y.value);
-            
+    
             ctx.globalAlpha = 1.0;
         }
 
