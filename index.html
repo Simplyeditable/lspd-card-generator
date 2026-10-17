@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <div class="header-info">
-            <span class="version-info">v1.5</span>
+            <span class="version-info">v1.6</span>
         </div>
         <h1>LSPD Business Card Generator</h1>
         <p>Forked from coopik43's generator</p>
@@ -21,10 +21,25 @@
         <div id="result-container"></div>
         <canvas id="card-canvas" width="500" height="300"></canvas>
 
-        <div class="form-controls">
-            <div class="form-group" data-field="phone">
-                <input type="number" id="phone-input" placeholder="Phone Number" required>
-            </div>
+        <div class="form-group" data-field="phone">
+			<div class="input-group">
+				<input type="number" id="phone-input" placeholder="Phone Number" required>
+				<select id="phone-font-select">
+					<option value="Crustaceans Signature">Signature</option>
+					<option value="Rezerv">Rezerv</option>
+					<option value="Copperplate">Copperplate</option>
+					<option value="Bastliga One">Bastliga One</option>
+					<option value="PerfectoCalligraphy">Perfecto Calligraphy</option>
+					<option value="Priestacy">Priestacy</option>
+					<option value="RusticRoadway">Rustic Roadway</option>
+					<option value="Wasted-Vindey">Wasted-Vindey</option>
+					<option value="AutografPersonalUseOnly">Autograf</option>
+					<option value="Theprestigesignature">Prestige</option>
+					<option value="Autography-DOLnW">Autography-DOLnW</option>
+				</select>
+			</div>
+		</div>
+		
             <div class="form-group" data-field="division">
                 <select id="division-select">
                     <option value="">-- Select Division (Optional) --</option>
@@ -33,6 +48,7 @@
                     <option value="Gang Enforcement Detail">Gang Enforcement Detail</option>
                     <option value="Detective Bureau">Detective Bureau</option>
                     <option value="Traffic Division">Traffic Division</option>
+					<option value="Internal Affairs">Internal Affairs</option>
                 </select>
             </div>
             <div class="form-group" data-field="subdivision">
@@ -147,46 +163,6 @@
             <li>Use the command: <code>/note [id of new note] [amount] [content] [Your Imgur URL]</code></li>
             <li>Use the command: <code>/giveitem</code> to give out your cards to other people.</li>
         </ol>
-    </div>
-
-    <div id="changelog-container" class="changelog-container">
-        <h2 id="changelog-toggle">
-            Changelog
-            <span class="toggle-icon">›</span>
-        </h2>
-        <div class="changelog-content">
-            <div class="changelog-entry">
-                <h3>v1.5 - July 5, 2025</h3>
-                <ul>
-                    <li>Made "Work Area" option exclusive to the Mission Row Division (MRD).</li>
-                    <li>Removed the local "Cards Generated" counter feature.</li>
-                    <li>Added 3 new fonts.</li>
-                    <li>Updated the changelog to be a collapsible dropdown.</li>
-                </ul>
-            </div>
-            <div class="changelog-entry">
-                <h3>v1.4 - July 5, 2025</h3>
-                <ul>
-                    <li>Reordered Division, Sub-Division, and Work Area fields for better flow.</li>
-                    <li>Added dynamic sub-divisions based on the selected division.</li>
-                    <li>Combined Division and Sub-Division text onto a single line on the card.</li>
-                </ul>
-            </div>
-            <div class="changelog-entry">
-                <h3>v1.3 - July 5, 2025</h3>
-                <ul>
-                    <li>Added optional Sub-Division field.</li>
-                    <li>Added 'Advanced Settings'.</li>
-                </ul>
-            </div>
-            <div class="changelog-entry">
-                <h3>v1.2 Beta - July 4, 2025</h3>
-                <ul>
-                    <li>Initial Release.</li>
-                    <li>Bug Fixes.</li>
-                </ul>
-            </div>
-        </div>
     </div>
 
     <script src="script.js"></script>

@@ -27,7 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'Metropolitan Division': ['Diving Unit', 'H Platoon', 'K-9 Platoon', 'Bomb Squad', 'Crisis Negotiation', 'D Platoon', 'Sergeant', 'Lieutenant'],
         'Gang Enforcement Detail': ['Gang  Officer', 'Senior Gang Officer', 'Sergeant', 'Lieutenant'],
         'Detective Bureau': ['Gang Impact Team', 'MRAD', 'Major Crimes', 'Lieutenant'],
-        'Traffic Division': ['Traffic Officer', 'Specialized enforcement section', 'Sergeant', 'Lieutenant']
+        'Traffic Division': ['Traffic Officer', 'Specialized enforcement section', 'Sergeant', 'Lieutenant'],
+		'Internal Affairs': ['Complaint Investigation Section', 'Force Investigation Section', 'Special Investigator', 'Detective', 'Sergeant', 'Lieutenant']
     };
 
     function initializeGenerator() {
@@ -43,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
               generateBtn = document.getElementById('generate-btn'),
               fontSelect = document.getElementById('font-select'),
               badgeFontSelect = document.getElementById('badge-font-select'),
+			  phoneFontSelect = document.getElementById('phone-font-select'),
               resultContainer = document.getElementById('result-container');
 
         const areaFormGroup = document.querySelector('.form-group[data-field="area"]');
@@ -84,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.globalAlpha = 0.9; 
 
             // 1. LSPD (Phone Input)
-            ctx.font = `${sliders.phone.size.value}px '${templateConfig.settings.phone.font}'`;
+            ctx.font = `${sliders.phone.size.value}px '${phoneFontSelect.value}'`;
             ctx.textAlign = templateConfig.settings.phone.align;
             ctx.fillText(phoneInput.value || '', sliders.phone.x.value, sliders.phone.y.value);
 
@@ -190,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             validateForm();
         });
 
-        [phoneInput, areaSelect, subdivisionSelect, badgeInput, nameInput, fontSelect, badgeFontSelect].forEach(element => {
+        [phoneInput, areaSelect, subdivisionSelect, badgeInput, nameInput, fontSelect, badgeFontSelect, phoneFontSelect].forEach(element => {
             element.addEventListener('input', () => {
                 drawCard();
                 validateForm();
