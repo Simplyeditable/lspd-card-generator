@@ -23,11 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const subDivisionMappings = {
-        'Mission Row Division':  ['Police Officer',  'Fugitive Apprehension Detail', 'Sergeant'],
-        'Metropolitan Division': ['Diving Unit', 'H Platoon', 'K-9 Platoon', 'Bomb Squad', 'Crisis Negotiation', 'D Platoon', 'Sergeant'],
-        'Gang Enforcement Detail': ['Gang  Officer', 'Senior Gang Officer', 'Sergeant'],
-        'Detective Bureau': ['Gang Impact Team', 'MRAD', 'Major Crimes'],
-        'Traffic Division': ['Traffic Officer', 'Specialized enforcement section', 'Sergeant']
+        'Mission Row Division':  ['Police Officer',  'Senior Lead Officer', 'Fugitive Apprehension Detail', 'Sergeant', 'Lieutenant'],
+        'Metropolitan Division': ['Diving Unit', 'H Platoon', 'K-9 Platoon', 'Bomb Squad', 'Crisis Negotiation', 'D Platoon', 'Sergeant', 'Lieutenant'],
+        'Gang Enforcement Detail': ['Gang  Officer', 'Senior Gang Officer', 'Sergeant', 'Lieutenant'],
+        'Detective Bureau': ['Gang Impact Team', 'MRAD', 'Major Crimes', 'Lieutenant'],
+        'Traffic Division': ['Traffic Officer', 'Specialized enforcement section', 'Sergeant', 'Lieutenant']
     };
 
     function initializeGenerator() {
